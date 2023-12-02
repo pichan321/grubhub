@@ -3,10 +3,12 @@ import { useEffect, useState } from "react"
 import { API_URL } from "../../variables"
 import Image from "next/image"
 import RatingStar from "@/images/star.png"
+import { useRouter } from "next/router"
 
 export default function LetsEat() {
     const {loading, fetcher} = useFetch()
     const [restaurants, setRestaurants] = useState(null)
+    const router = useRouter()
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -24,7 +26,7 @@ export default function LetsEat() {
                 {
                     restaurants && restaurants.map(restaurant => {
                         return (
-                            <div className="col-span-3 cursor-pointer">
+                            <div className="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 cursor-pointer" onClick={() => router.push({pathname: "/restaurant/[restaurantName]/[restaurantId]", query: {restaurantName: restaurant.name, restaurantId: restaurant.id}})}>
                                 <Image src={restaurant.icon_url} loader={() => restaurant.icon_url} width={0} height={0} className="rounded-lg w-full h-[150px]"/>
                                 
                                 <div className="flex flex-row">
